@@ -57,7 +57,7 @@ async function searchPokemon(input, resultBox, player) {
 
     resultBox.innerHTML = `
       <h3>${data.name}</h3>
-      <p>Health: ${pokeStatus[player].health}</p>
+      <p class="health" data-player="${player}">Health: ${pokeStatus[player].health}</p>
       <img class="pokemon-image" src="${imageUrl}" alt="${data.name}" />
       <p>ID: ${data.id}</p>
       <h4>Attacks</h4>
@@ -122,13 +122,34 @@ document.addEventListener('click', (event) => {
   const index = Number(moveItem.dataset.index);
   const move = pokeStatus[player].moves[index];
 
-  document.getElementById('test_player').textContent =
+   let opponent = 'a';
+  if (player === 'a') {
+    opponent = 'b';
+  }
+
+ pokeStatus[opponent].health = pokeStatus[opponent].health - move.power;
+
+
+updateHealth(document.querySelector(`.health[data-player="${opponent}"]`), opponent);
+
+
+
+  document.getElementById('test_player').innerHTML =
     `jugador ${player} ataque ${move.name} poder ${move.power}
+
+    <br>
+    <br>
+    HP a: ${pokeStatus['a'].health} HP b: ${pokeStatus['b'].health}
+
+    `;
+
+
+
+
+
     
-    <br>
-    <br>
-    <br>
-    
-    `
-    ;
 });
+
+function updateHealth(healthElement, player) {
+  healthElement.textContent = `Health: ${pokeStatus[player].health}`;
+}
