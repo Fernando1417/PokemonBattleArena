@@ -8,30 +8,25 @@
   </head>
   <body>
     <main class="battle-arena">
-      <header class="title-block">
-        <h1>Pokemon Battle Arena</h1>
-        <p>Choose your Pokemon and begin the battle.</p>
-      </header>
+      <h1>Pokemon Battle Arena</h1>
 
       <section class="battle-box">
-        <div class="pokemon-card player-a">
+        <div class="pokemon-card">
           <h2>Player A</h2>
-          <div class="search-box">
-            <h3>Pokemon Name</h3>
-            <input type="text" placeholder="Pikachu" />
-          </div>
-          <div class="PokemonA"></div>
+          <input id="a-input" type="text" value="pikachu" />
+          <button id="a-btn" type="button">Search</button>
+          <div id="a-result"></div>
         </div>
 
-        <div class="pokemon-card player-b">
+        <div class="pokemon-card">
           <h2>Player B</h2>
-          <div class="search-box">
-            <h3>Pokemon Name</h3>
-            <input type="text" placeholder="Charizard" />
-          </div>
-          <div class="PokemonB"></div>
+          <input id="b-input" type="text" value="charizard" />
+          <button id="b-btn" type="button">Search</button>
+          <div id="b-result"></div>
         </div>
       </section>
     </main>
+
+    <script src="script.js"></script>
   </body>
 </html>
