@@ -2,6 +2,24 @@ const aInput = document.getElementById('a-input');
 const aButton = document.getElementById('a-btn');
 const aResult = document.getElementById('a-result');
 
+
+const bInput = document.getElementById('b-input');
+const bButton = document.getElementById('b-btn');
+const bResult = document.getElementById('b-result');
+
+const playerAWin = 0;
+const playerBWin = 0;
+const pokemonAHealth = 53;
+const pokemonBHealth = 53;
+
+
+
+
+
+
+
+
+
 function getRandomMoves(moves) {
   // falta - eleguir movimientos aleatorios de la lista de movimientos 
   return moves
@@ -57,5 +75,17 @@ aInput.addEventListener('keydown', (event) => {
   }
 });
 
+// Player B
+bButton.addEventListener('click', () => {
+  searchPokemon(bInput, bResult);
+});
+
+bInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    searchPokemon(bInput, bResult);
+  }
+});
+
 
 searchPokemon(aInput, aResult);
+searchPokemon(bInput, bResult);
