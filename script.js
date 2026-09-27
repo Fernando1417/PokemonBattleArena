@@ -69,13 +69,14 @@ function renderPokemon(data, resultBox, player) {
       <img class="pokemon-image" src="${imageUrl}" alt="${data.name}" />
 
       <h4>Attacks</h4>
-      <ul class="move-list ocultar">
+      <div class="move-list ocultar">
         ${pokeMoves.map((move, index) => 
-          `<li 
+          `<button 
+          type="button"
           data-player="${player}" 
           data-index="${index}">${move.name}
-          </li>`).join('')}
-      </ul>
+          </button>`).join('')}
+      </div>
     `;
 }
 
@@ -187,8 +188,9 @@ document.addEventListener('click', (event) => {
   resetGameOver() 
   if (gameOver) return; 
 
+  //ahora es boton
+  const moveItem = event.target.closest('.move-list button');
 
-  const moveItem = event.target.closest('.move-list li');
   if (!moveItem) return; 
 
 
@@ -198,7 +200,7 @@ document.addEventListener('click', (event) => {
   const index = Number(moveItem.dataset.index);
   const move = pokeStatus[player].moves[index];
 
-   let opponent = 'a';
+   let opponent = 'a';moveItem
   if (player === 'a') {
     opponent = 'b';
   }
