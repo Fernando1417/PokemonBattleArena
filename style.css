@@ -80,3 +80,39 @@ h1 {
 .ocultar {
   display: none;
 }
+
+
+.statusBattle {
+  margin: 20px 0;
+  padding: 16px;
+  min-height: 24px;
+}
+
+#gameOverStatus {
+  color: #b45309;
+  font-weight: 600;
+}
+
+#lastWinStatus {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2f855a;
+  min-height: 1.8rem;
+}
+
+#scoreBoard {
+  margin-top: 12px;
+  padding: 10px 20px;
+  display: inline-block;
+  background: #f0f4f8;
+  border: 1px solid #dfe6ee;
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+#scoreBoard br {
+  display: none;
+}
+
+

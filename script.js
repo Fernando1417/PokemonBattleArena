@@ -244,7 +244,7 @@ function updateHealth(healthElement, player) {
 
 function updateScoreBoard() {
   document.getElementById('scoreBoard').innerHTML =
-    `Player A: ${winScore.a} wins <br /> Player B: ${winScore.b} wins`;
+    `Player A: ${winScore.a} wins / Player B: ${winScore.b} wins`;
 }
 
 
