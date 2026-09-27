@@ -13,18 +13,30 @@
       <section class="battle-box">
         <div class="pokemon-card Player_A">
           <h2>Player A</h2>
-          <input id="a-input" type="text" value="pikachu" />
+          <input
+            id="a-input"
+            type="text"
+            value="pikachu"
+            list="pokemon-datalist"
+          />
           <button id="a-btn" type="button">Search</button>
           <div id="a-result"></div>
         </div>
 
         <div class="pokemon-card Player_B">
           <h2>Player B</h2>
-          <input id="b-input" type="text" value="charizard" />
+          <input
+            id="b-input"
+            type="text"
+            value="charizard"
+            list="pokemon-datalist"
+          />
           <button id="b-btn" type="button">Search</button>
           <div id="b-result"></div>
         </div>
       </section>
+
+      <datalist id="pokemon-datalist"></datalist>
 
       <section class="battle-controls">
         <button id="battle-btn" type="button" class="ocultar">Battle!</button>

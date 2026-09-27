@@ -230,3 +230,23 @@ function updateHealth(healthElement, player) {
 
 
 
+
+const pokemonDatalist = document.getElementById('pokemon-datalist');
+
+//espera la consulta
+async function loadPokemonNames() {
+  try {
+    // get lista de nombres
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
+    const data = await response.json();
+
+    pokemonDatalist.innerHTML = data.results
+      .map(({ name }) => `<option value="${name}"></option>`)
+      .join('');
+  } catch {
+    // nada
+  }
+}
+
+loadPokemonNames();
+
