@@ -57,8 +57,10 @@ async function fetchPokemon(nameOrId) {
 function renderPokemon(data, resultBox, player) {
     const imageUrl = data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
     const pokeMoves = getMoves(data.moves);
-     pokeStatus[player].moves = pokeMoves; //
-    pokeStatus[player].health = 35; //reinicia hp a 35
+    const hp = data.stats.find(s => s.stat.name === 'hp').base_stat;
+
+    pokeStatus[player].moves = pokeMoves;
+    pokeStatus[player].health = hp;
 
     resultBox.innerHTML = `
       <h3>${data.name}</h3>
@@ -207,7 +209,6 @@ document.addEventListener('click', (event) => {
 updateHealth(document.querySelector(`.health[data-player="${opponent}"]`), opponent);
 
 
-slam
 
 if (pokeStatus[opponent].health <= 0) {
     gameOver = true;
@@ -235,7 +236,7 @@ function updateHealth(healthElement, player) {
 
 
 function updateScoreBoard() {
-  document.getElementById('scoreBoard').textContent =
+  document.getElementById('scoreBoard').innerHTML =
     `Player A: ${winScore.a} wins <br /> Player B: ${winScore.b} wins`;
 }
 
