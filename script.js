@@ -69,6 +69,12 @@ async function searchPokemon(input, resultBox, player) {
           </li>`).join('')}
       </ul>
     `;
+
+
+//reset gameOver
+resetGameOver() 
+
+
   } catch {
     resultBox.textContent = 'Could not load Pokemon.';
   }
@@ -103,11 +109,19 @@ bInput.addEventListener('keydown', (event) => {
 
 
 
+// manejar si ya hp es menor a 0
+
+let gameOver = false;
 
 
+function resetGameOver() {
+  if (pokeStatus['a'].health > 0 && pokeStatus['b'].health > 0) {
+    gameOver = false;
+    return;
+  }
 
-
-
+  document.getElementById('gameOverStatus').innerHTML = `Choose a new pokemon to continue battling`;
+}
 
 
 
@@ -115,9 +129,16 @@ bInput.addEventListener('keydown', (event) => {
 // mejor agregar la info en el li 
 // y hacer un event listener
 document.addEventListener('click', (event) => {
+  resetGameOver() 
+  if (gameOver) return; 
+
+
   const moveItem = event.target.closest('.move-list li');
   if (!moveItem) return; 
 
+
+
+  
   const player = moveItem.dataset.player;
   const index = Number(moveItem.dataset.index);
   const move = pokeStatus[player].moves[index];
@@ -134,17 +155,11 @@ updateHealth(document.querySelector(`.health[data-player="${opponent}"]`), oppon
 
 
 
-  document.getElementById('test_player').innerHTML =
-    `jugador ${player} ataque ${move.name} poder ${move.power}
-
-    <br>
-    <br>
-    HP a: ${pokeStatus['a'].health} HP b: ${pokeStatus['b'].health}
-
-    `;
-
-
-
+if (pokeStatus[opponent].health <= 0) {
+    gameOver = true;
+    document.getElementById('lastWinStatus').innerHTML = `Player ${player.toUpperCase()} wins!`;
+    return;
+}
 
 
     
@@ -153,3 +168,7 @@ updateHealth(document.querySelector(`.health[data-player="${opponent}"]`), oppon
 function updateHealth(healthElement, player) {
   healthElement.textContent = `Health: ${pokeStatus[player].health}`;
 }
+
+
+
+
