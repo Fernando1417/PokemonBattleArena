@@ -74,7 +74,7 @@ async function searchPokemon(input, resultBox, player) {
       <img class="pokemon-image" src="${imageUrl}" alt="${data.name}" />
 
       <h4>Attacks</h4>
-      <ul class="move-list">
+      <ul class="move-list ocultar">
         ${pokeMoves.map((move, index) => 
           `<li 
           data-player="${player}" 
@@ -86,12 +86,42 @@ async function searchPokemon(input, resultBox, player) {
 
 //reset gameOver
 resetGameOver() 
-
+//listo para juega?
+checkBattleReady();
 
   } catch {
     resultBox.textContent = 'Could not load Pokemon.';
   }
 }
+
+const battleButton = document.getElementById('battle-btn');
+
+function checkBattleReady() {
+  //basicamente muestro o quito los ataques
+  if (pokeStatus.a.moves && pokeStatus.b.moves){
+    battleButton.classList.remove('ocultar');
+  } else {
+    battleButton.classList.add('ocultar');
+  }
+}
+
+// al click
+battleButton.addEventListener('click', () => {
+  
+  document.querySelectorAll('.move-list').forEach((list) => list.classList.remove('ocultar'));
+  battleButton.classList.add('ocultar');
+
+  
+});
+
+
+
+
+
+
+
+
+
 
 
 // mejorar la busqueda con debounce
