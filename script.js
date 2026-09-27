@@ -9,8 +9,8 @@ const bResult = document.getElementById('b-result');
 
 const winScore = { a: 0, b: 0 };
 const pokeStatus = {
-  a: { health: 35 },
-  b: { health: 35 },
+  a: {  },
+  b: {  },
 };
 
 function debounce(func) {
@@ -225,8 +225,8 @@ if (pokeStatus[opponent].health <= 0) {
     updateScoreBoard();
 
     // limpiar estado para la siguiente juego
-    pokeStatus.a.moves = null;
-    pokeStatus.b.moves = null;
+    // pero si un pokemon gana puede seguir jugando
+  pokeStatus[opponent].moves = null;
     checkBattleReady();
 
 
@@ -265,5 +265,29 @@ async function loadPokemonNames() {
   }
 }
 
-loadPokemonNames();
+const resetButton = document.getElementById('reset-btn');
+
+function resetGame() {
+  // marcador
+  winScore.a = 0;
+  winScore.b = 0;
+  updateScoreBoard();
+
+
+  // resultados y busquedas
+  aResult.innerHTML = '';
+  bResult.innerHTML = '';
+  aInput.value = '';
+  bInput.value = '';
+
+  // mensajes y botones
+  document.getElementById('gameOverStatus').innerHTML = '';
+  document.getElementById('lastWinStatus').innerHTML = '';
+  battleButton.classList.add('ocultar');
+
+  gameOver = false;
+}
+
+resetButton.addEventListener('click', resetGame);
+
 

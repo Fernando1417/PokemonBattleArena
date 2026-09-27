@@ -116,3 +116,12 @@ h1 {
 }
 
 
+
+
+#reset-btn {
+  padding: 10px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 80px 0;
+}
