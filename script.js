@@ -62,7 +62,11 @@ async function searchPokemon(input, resultBox, player) {
       <p>ID: ${data.id}</p>
       <h4>Attacks</h4>
       <ul class="move-list">
-        ${pokeMoves.map((move) => `<li>${move.name}</li>`).join('')}
+        ${pokeMoves.map((move, index) => 
+          `<li 
+          data-player="${player}" 
+          data-index="${index}">${move.name}
+          </li>`).join('')}
       </ul>
     `;
   } catch {
@@ -107,29 +111,24 @@ bInput.addEventListener('keydown', (event) => {
 
 
 
+// quiero saber que ataque se hizo click
+// mejor agregar la info en el li 
+// y hacer un event listener
+document.addEventListener('click', (event) => {
+  const moveItem = event.target.closest('.move-list li');
+  if (!moveItem) return; 
 
+  const player = moveItem.dataset.player;
+  const index = Number(moveItem.dataset.index);
+  const move = pokeStatus[player].moves[index];
 
-
-const playerA = document.getElementsByClassName('Player_A');
-
-
-playerA[0].addEventListener('click', () => {
-  
-    document.getElementById('test_player').innerHTML = `
-      jugador A
-
-    `;
+  document.getElementById('test_player').textContent =
+    `jugador ${player} ataque ${move.name} poder ${move.power}
+    
+    <br>
+    <br>
+    <br>
+    
+    `
+    ;
 });
-
-
-const playerB = document.getElementsByClassName('Player_B');
-
-
-playerB[0].addEventListener('click', () => {
-  
-    document.getElementById('test_player').innerHTML = `
-      jugador B
-
-    `;
-});
-
