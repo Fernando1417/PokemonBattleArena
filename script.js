@@ -14,6 +14,17 @@ const pokeStatus = {
   b: { health: 35 },
 };
 
+function debounce(func) {
+  //manejar mejor las consultas, de la funcoin de busqueda
+  let timeoutId; // guarda el temporizador activo entre llamadas (closure)
+
+  return (...args) => {
+    clearTimeout(timeoutId); // cancela si se escribe
+    timeoutId = setTimeout(() => func(...args), 500); // recién ejecuta func si pasan "delay" ms sin nuevas llamadas
+  };
+}
+
+
 
 function getMoves(moves, ) {
   // noto que  notiene que ser aleatorio 
@@ -40,6 +51,7 @@ async function searchPokemon(input, resultBox, player) {
     return;
   }
 
+
   //meor tener un try catch para los no econtrados 
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameOrId.toLowerCase()}`);
@@ -57,9 +69,10 @@ async function searchPokemon(input, resultBox, player) {
 
     resultBox.innerHTML = `
       <h3>${data.name}</h3>
+      <p>ID: ${data.id}</p>
       <p class="health" data-player="${player}">Health: ${pokeStatus[player].health}</p>
       <img class="pokemon-image" src="${imageUrl}" alt="${data.name}" />
-      <p>ID: ${data.id}</p>
+
       <h4>Attacks</h4>
       <ul class="move-list">
         ${pokeMoves.map((move, index) => 
@@ -80,27 +93,27 @@ resetGameOver()
   }
 }
 
+
+// mejorar la busqueda con debounce
+const debouncedSearchA = debounce(() => searchPokemon(aInput, aResult, 'a'));
+const debouncedSearchB = debounce(() => searchPokemon(bInput, bResult, 'b'));
+
+aInput.addEventListener('input', debouncedSearchA);
+bInput.addEventListener('input', debouncedSearchB);
+
 // Player A
 aButton.addEventListener('click', () => {
   searchPokemon(aInput, aResult, 'a');
 });
 
-aInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    searchPokemon(aInput, aResult, 'a');
-  }
-});
+
 
 // Player B
 bButton.addEventListener('click', () => {
   searchPokemon(bInput, bResult, 'b');
 });
 
-bInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    searchPokemon(bInput, bResult, 'b');
-  }
-});
+
 
 
 
@@ -117,6 +130,7 @@ let gameOver = false;
 function resetGameOver() {
   if (pokeStatus['a'].health > 0 && pokeStatus['b'].health > 0) {
     gameOver = false;
+      document.getElementById('gameOverStatus').innerHTML = ``;
     return;
   }
 
