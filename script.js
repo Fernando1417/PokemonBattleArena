@@ -91,7 +91,7 @@ async function searchPokemon(input, resultBox, player) {
     return;
   }
 
-
+  resultBox.textContent = 'Loading...';
   //mejor tener un try catch para los no econtrados 
   try {
     const data = await fetchPokemon(nameOrId);
@@ -123,7 +123,8 @@ battleButton.addEventListener('click', () => {
   document.querySelectorAll('.move-list').forEach((list) => list.classList.remove('ocultar'));
   battleButton.classList.add('ocultar');
 
-  
+    // quitar el ganador anterior 
+  document.getElementById('lastWinStatus').innerHTML = '';
 });
 
 
@@ -200,7 +201,7 @@ document.addEventListener('click', (event) => {
   const index = Number(moveItem.dataset.index);
   const move = pokeStatus[player].moves[index];
 
-   let opponent = 'a';moveItem
+   let opponent = 'a';
   if (player === 'a') {
     opponent = 'b';
   }
@@ -223,6 +224,10 @@ if (pokeStatus[opponent].health <= 0) {
     winScore[player] += 1;
     updateScoreBoard();
 
+    // limpiar estado para la siguiente juego
+    pokeStatus.a.moves = null;
+    pokeStatus.b.moves = null;
+    checkBattleReady();
 
 
     return;
