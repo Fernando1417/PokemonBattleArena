@@ -272,7 +272,9 @@ function resetGame() {
   winScore.a = 0;
   winScore.b = 0;
   updateScoreBoard();
-
+  
+  pokeStatus.a = {};
+  pokeStatus.b = {};
 
   // resultados y busquedas
   aResult.innerHTML = '';
