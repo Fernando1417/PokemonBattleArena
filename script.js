@@ -15,16 +15,19 @@ const pokeStatus = {
 };
 
 
+function getMoves(moves, ) {
+  // noto que  notiene que ser aleatorio 
+  // lo movimeintos estan ordenados
 
 
-
-
-
-function getRandomMoves(moves) {
-  // falta - eleguir movimientos aleatorios de la lista de movimientos 
+  
   return moves
     .slice(0, 4)
-    .map(({ move }) => move.name.replaceAll('-', ' '));
+    .map(({ move }) => ({
+      name: move.name.replaceAll('-', ' '),
+      power: Math.floor(Math.random() * (7 - 2 + 1)) + 2, // 2 a 7
+    }));
+
 }
 
 async function searchPokemon(input, resultBox, player) {
@@ -48,7 +51,8 @@ async function searchPokemon(input, resultBox, player) {
 
     const data = await response.json();
     const imageUrl = data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
-    const randomMoves = getRandomMoves(data.moves);
+    const pokeMoves = getMoves(data.moves);
+     pokeStatus[player].moves = pokeMoves; //
     pokeStatus[player].health = 35; //reinicia hp a 35
 
     resultBox.innerHTML = `
@@ -58,7 +62,7 @@ async function searchPokemon(input, resultBox, player) {
       <p>ID: ${data.id}</p>
       <h4>Attacks</h4>
       <ul class="move-list">
-        ${randomMoves.map((move) => `<li>${move}</li>`).join('')}
+        ${pokeMoves.map((move) => `<li>${move.name}</li>`).join('')}
       </ul>
     `;
   } catch {
@@ -88,4 +92,44 @@ bInput.addEventListener('keydown', (event) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const playerA = document.getElementsByClassName('Player_A');
+
+
+playerA[0].addEventListener('click', () => {
+  
+    document.getElementById('test_player').innerHTML = `
+      jugador A
+
+    `;
+});
+
+
+const playerB = document.getElementsByClassName('Player_B');
+
+
+playerB[0].addEventListener('click', () => {
+  
+    document.getElementById('test_player').innerHTML = `
+      jugador B
+
+    `;
+});
 
