@@ -7,8 +7,7 @@ const bInput = document.getElementById('b-input');
 const bButton = document.getElementById('b-btn');
 const bResult = document.getElementById('b-result');
 
-const playerAWin = 0;
-const playerBWin = 0;
+const winScore = { a: 0, b: 0 };
 const pokeStatus = {
   a: { health: 35 },
   b: { health: 35 },
@@ -208,6 +207,7 @@ document.addEventListener('click', (event) => {
 updateHealth(document.querySelector(`.health[data-player="${opponent}"]`), opponent);
 
 
+slam
 
 if (pokeStatus[opponent].health <= 0) {
     gameOver = true;
@@ -215,6 +215,12 @@ if (pokeStatus[opponent].health <= 0) {
 
 // oultar ataques
     document.querySelectorAll('.move-list').forEach((list) => list.classList.add('ocultar'));
+
+    // sumar al jugador
+    winScore[player] += 1;
+    updateScoreBoard();
+
+
 
     return;
 }
@@ -228,7 +234,10 @@ function updateHealth(healthElement, player) {
 }
 
 
-
+function updateScoreBoard() {
+  document.getElementById('scoreBoard').textContent =
+    `Player A: ${winScore.a} wins <br /> Player B: ${winScore.b} wins`;
+}
 
 
 const pokemonDatalist = document.getElementById('pokemon-datalist');
