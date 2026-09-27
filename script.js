@@ -107,7 +107,7 @@ function checkBattleReady() {
 
 // al click
 battleButton.addEventListener('click', () => {
-  
+
   document.querySelectorAll('.move-list').forEach((list) => list.classList.remove('ocultar'));
   battleButton.classList.add('ocultar');
 
@@ -202,6 +202,10 @@ updateHealth(document.querySelector(`.health[data-player="${opponent}"]`), oppon
 if (pokeStatus[opponent].health <= 0) {
     gameOver = true;
     document.getElementById('lastWinStatus').innerHTML = `Player ${player.toUpperCase()} wins!`;
+
+// oultar ataques
+    document.querySelectorAll('.move-list').forEach((list) => list.classList.add('ocultar'));
+
     return;
 }
 
