@@ -7,9 +7,31 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>Pokemon Battle Arena</h1>
-      <p>Choose your Pokemon and begin the battle.</p>
+    <main class="battle-arena">
+      <header class="title-block">
+        <h1>Pokemon Battle Arena</h1>
+        <p>Choose your Pokemon and begin the battle.</p>
+      </header>
+
+      <section class="battle-box">
+        <div class="pokemon-card player-a">
+          <h2>Player A</h2>
+          <div class="search-box">
+            <h3>Pokemon Name</h3>
+            <input type="text" placeholder="Pikachu" />
+          </div>
+          <div class="PokemonA"></div>
+        </div>
+
+        <div class="pokemon-card player-b">
+          <h2>Player B</h2>
+          <div class="search-box">
+            <h3>Pokemon Name</h3>
+            <input type="text" placeholder="Charizard" />
+          </div>
+          <div class="PokemonB"></div>
+        </div>
+      </section>
     </main>
   </body>
 </html>
