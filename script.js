@@ -41,27 +41,21 @@ function getMoves(moves, ) {
 
 }
 
-async function searchPokemon(input, resultBox, player) {
-  //limpiar el contenido del resultado
-  resultBox.innerHTML = '';
-  const nameOrId = input.value.trim();
 
-  if (!nameOrId) {
-    resultBox.textContent = 'Enter a Pokemon name or ID.';
-    return;
+
+
+async function fetchPokemon(nameOrId) {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameOrId.toLowerCase()}`);
+
+  if (!response.ok) {
+    throw new Error('Pokemon not found');
   }
 
+  return response.json();
+}
 
-  //meor tener un try catch para los no econtrados 
-  try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameOrId.toLowerCase()}`);
 
-    if (!response.ok) {
-      resultBox.textContent = 'Pokemon not found. Check the spelling or ID.';
-      return;
-    }
-
-    const data = await response.json();
+function renderPokemon(data, resultBox, player) {
     const imageUrl = data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
     const pokeMoves = getMoves(data.moves);
      pokeStatus[player].moves = pokeMoves; //
@@ -82,13 +76,29 @@ async function searchPokemon(input, resultBox, player) {
           </li>`).join('')}
       </ul>
     `;
+}
 
 
-//reset gameOver
-resetGameOver() 
-//listo para juega?
-checkBattleReady();
+async function searchPokemon(input, resultBox, player) {
+  //limpiar el contenido del resultado
+  resultBox.innerHTML = '';
+  const nameOrId = input.value.trim();
 
+  if (!nameOrId) {
+    resultBox.textContent = 'Enter a Pokemon name or ID.';
+    return;
+  }
+
+
+  //mejor tener un try catch para los no econtrados 
+  try {
+    const data = await fetchPokemon(nameOrId);
+    renderPokemon(data, resultBox, player);
+
+    //reset gameOver
+    resetGameOver();
+    //listo para juega?
+    checkBattleReady();
   } catch {
     resultBox.textContent = 'Could not load Pokemon.';
   }
