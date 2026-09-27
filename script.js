@@ -9,10 +9,10 @@ const bResult = document.getElementById('b-result');
 
 const playerAWin = 0;
 const playerBWin = 0;
-const pokemonAHealth = 53;
-const pokemonBHealth = 53;
-
-
+const pokeStatus = {
+  a: { health: 35 },
+  b: { health: 35 },
+};
 
 
 
@@ -27,7 +27,7 @@ function getRandomMoves(moves) {
     .map(({ move }) => move.name.replaceAll('-', ' '));
 }
 
-async function searchPokemon(input, resultBox) {
+async function searchPokemon(input, resultBox, player) {
   //limpiar el contenido del resultado
   resultBox.innerHTML = '';
   const nameOrId = input.value.trim();
@@ -49,9 +49,11 @@ async function searchPokemon(input, resultBox) {
     const data = await response.json();
     const imageUrl = data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
     const randomMoves = getRandomMoves(data.moves);
+    pokeStatus[player].health = 35; //reinicia hp a 35
 
     resultBox.innerHTML = `
       <h3>${data.name}</h3>
+      <p>Health: ${pokeStatus[player].health}</p>
       <img class="pokemon-image" src="${imageUrl}" alt="${data.name}" />
       <p>ID: ${data.id}</p>
       <h4>Attacks</h4>
@@ -66,26 +68,24 @@ async function searchPokemon(input, resultBox) {
 
 // Player A
 aButton.addEventListener('click', () => {
-  searchPokemon(aInput, aResult);
+  searchPokemon(aInput, aResult, 'a');
 });
 
 aInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-    searchPokemon(aInput, aResult);
+    searchPokemon(aInput, aResult, 'a');
   }
 });
 
 // Player B
 bButton.addEventListener('click', () => {
-  searchPokemon(bInput, bResult);
+  searchPokemon(bInput, bResult, 'b');
 });
 
 bInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-    searchPokemon(bInput, bResult);
+    searchPokemon(bInput, bResult, 'b');
   }
 });
 
 
-searchPokemon(aInput, aResult);
-searchPokemon(bInput, bResult);
